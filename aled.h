@@ -1,7 +1,7 @@
 ﻿//---------------------------------
 // CustomARGB用 アドレサブルRGB LEDライブラリ
 // Indoor Corgi
-// Version 2020/5/21
+// Version 2020/7/2
 
 #include <Arduino.h>
 #ifndef ALED_H
@@ -234,11 +234,11 @@ class ALED {
       uint16_t index = 0;  // ledCounts配列のインデックスカウンター
       uint8_t mask = 1;
       for (uint8_t i = 0; i < maxCh; i++) {
-        if (0 != (mask & ch)) {
+        if (0 != (mask & ch) && ledCounts[index]>0) {
           genWaveform(mask & ch, start, ledCounts[index] * 3);
           start += ledCounts[index] * 3;
-          index++;
         }
+        index++;
         mask = mask << 1;
       }
 
