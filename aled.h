@@ -1,7 +1,7 @@
 ﻿//---------------------------------
 // CustomARGB用 アドレサブルRGB LEDライブラリ
 // Indoor Corgi
-// Version 2020/7/2
+// Version 2020/7/4
 
 #include <Arduino.h>
 #ifndef ALED_H
@@ -234,7 +234,7 @@ class ALED {
       uint16_t index = 0;  // ledCounts配列のインデックスカウンター
       uint8_t mask = 1;
       for (uint8_t i = 0; i < maxCh; i++) {
-        if (0 != (mask & ch) && ledCounts[index]>0) {
+        if (0 != (mask & ch) && ledCounts[index] > 0) {
           genWaveform(mask & ch, start, ledCounts[index] * 3);
           start += ledCounts[index] * 3;
         }
@@ -327,8 +327,9 @@ class ALED {
   //   val : 最終的な明るさの調整を0.0 - 100.0で指定する。点滅させる場合などに使用。
   virtual void loadSinglePattern(HSVColor color, float val) {
     color.val *= val / 100.0f;
+    RGBColor rgb = color.toRGB();
     for (uint16_t i = 0; i < ledCount; i++) {
-      loadLedData(i, color);
+      loadLedDataRgb(i, rgb);
     }
   }
 
