@@ -1,7 +1,7 @@
 //---------------------------------
 // CustomARGB用 アドレサブルRGB LEDライブラリ
 // Indoor Corgi
-// Version 2020/7/4
+// Version 2024/7/21
 
 #include <Arduino.h>
 #ifndef ALED_H
@@ -284,6 +284,14 @@ class ALED {
           asm("nop");
         } else {
           PORTC = ch;
+#ifdef ALED_TIMING_INPI554FCH
+          asm("nop");
+          asm("nop");
+          asm("nop");
+          asm("nop");
+          asm("nop");
+          asm("nop");
+#else
           asm("nop");
           asm("nop");
           asm("nop");
@@ -292,6 +300,7 @@ class ALED {
           asm("nop");
           asm("nop");
           asm("nop");
+#endif
           mask = mask >> 1;
           if (mask == 0) {
             mask = 0x80;
@@ -305,6 +314,9 @@ class ALED {
             break;
           }
           PORTC = 0;
+#ifdef ALED_TIMING_INPI554FCH
+          asm("nop");
+#endif
         }
       }
     }
